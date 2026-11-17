@@ -10,6 +10,7 @@ import { can, ROLE_LABELS, type Permission } from "@/lib/roles";
 import { financialYear } from "@/lib/format";
 import type { SessionUser } from "@/lib/jwt";
 import { cx, Logo, BrandName } from "./ui";
+import { api } from "@/lib/client";
 
 const SessionCtx = createContext<SessionUser | null>(null);
 export const useUser = () => useContext(SessionCtx)!;
@@ -98,7 +99,7 @@ export function Shell({ user, children }: { user: SessionUser; children: React.R
   }, [router, user.role]);
 
   async function logout() {
-    await fetch("/api/auth/logout", { method: "POST" });
+    await api("/api/auth/logout", { method: "POST" }).catch(() => {});
     router.replace("/login");
     router.refresh();
   }

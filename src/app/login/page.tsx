@@ -4,6 +4,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2, ClipboardList, FileCheck2, Receipt, Wallet, ShieldCheck, LineChart, Calculator, HardHat, UserCog, ArrowRight } from "lucide-react";
 import { homeFor, type Role } from "@/lib/roles";
 import { BrandName, Logo } from "@/components/ui";
+import { DEMO as DEMO_MODE } from "@/lib/demo-config";
+import { demoSignIn } from "@/lib/demo";
 
 const PW = "Fulchand@123";
 const DEMO = [
@@ -26,6 +28,12 @@ function LoginForm() {
     setLoading(em);
     setError("");
     try {
+      if (DEMO_MODE) {
+        const user = demoSignIn(em, pw);
+        router.replace(homeFor(user.role as Role));
+        router.refresh();
+        return;
+      }
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

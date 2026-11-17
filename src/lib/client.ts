@@ -1,7 +1,13 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
+import { DEMO } from "./demo-config";
+import { demoApi } from "./demo";
 
 export async function api<T = any>(url: string, opts: { method?: string; body?: any } = {}): Promise<T> {
+  if (DEMO) {
+    const m = opts.method || (opts.body ? "POST" : "GET");
+    return demoApi(url, m) as Promise<T>;
+  }
   const isForm = typeof FormData !== "undefined" && opts.body instanceof FormData;
   const res = await fetch(url, {
     method: opts.method || (opts.body ? "POST" : "GET"),
