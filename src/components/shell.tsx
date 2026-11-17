@@ -114,7 +114,7 @@ export function Shell({ user, children }: { user: SessionUser; children: React.R
         if (!items.length) return null;
         return (
           <div key={s.section}>
-            <p className="px-2.5 pb-[5px] pt-3.5 text-[11px] font-semibold text-slate-400">{s.section}</p>
+            <p className="px-2.5 pb-[5px] pt-4 text-[10.5px] font-semibold uppercase tracking-[0.08em] text-[#6b7590]">{s.section}</p>
             <ul className="space-y-px">
               {items.map((i) => {
                 const active = path === i.href || path.startsWith(i.href + "/");
@@ -124,11 +124,11 @@ export function Shell({ user, children }: { user: SessionUser; children: React.R
                       href={i.href}
                       className={cx(
                         "group relative flex items-center gap-2.5 rounded-md px-2.5 py-[7px] text-[13.5px] transition",
-                        active ? "bg-slate-100 font-semibold text-slate-900" : "font-medium text-slate-700 hover:bg-[#f7f6f3] hover:text-slate-900"
+                        active ? "bg-white/[0.09] font-semibold text-white" : "font-medium text-[#a7b0c6] hover:bg-white/[0.05] hover:text-white"
                       )}
                     >
-                      {active && <span className="absolute -left-2.5 inset-y-2 w-[3px] rounded-r-sm bg-brand-600" />}
-                      <i.icon className={cx("size-[17px] shrink-0", active ? "text-brand-600" : "text-slate-500")} />
+                      {active && <span className="absolute -left-2.5 inset-y-2 w-[3px] rounded-r-sm bg-[#fbbf24]" />}
+                      <i.icon className={cx("size-[17px] shrink-0", active ? "text-[#fbbf24]" : "text-[#6b7590] group-hover:text-[#c9d0e0]")} />
                       {i.label}
                     </Link>
                   </li>
@@ -142,21 +142,21 @@ export function Shell({ user, children }: { user: SessionUser; children: React.R
   );
 
   const brand = (
-    <Link href="/" className="flex h-[60px] items-center gap-2.5 border-b border-slate-100 px-[18px]">
-      <Logo />
-      <BrandName />
+    <Link href="/" className="flex h-[60px] items-center gap-2.5 border-b border-white/[0.06] px-[18px]">
+      <Logo light />
+      <BrandName dark />
     </Link>
   );
 
   const sidebarFooter = (
-    <div className="border-t border-slate-100 p-3">
+    <div className="border-t border-white/[0.06] p-3">
       <div className="flex items-center gap-3 rounded-lg px-2 py-2">
         <div className="grid size-8 shrink-0 place-items-center rounded-full bg-[#e9e3da] text-[11.5px] font-bold text-[#5b4a36]">{initials(user.name)}</div>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-[13px] font-semibold text-slate-900">{user.name}</p>
-          <p className="truncate text-[11.5px] text-slate-500">{ROLE_LABELS[user.role]}</p>
+          <p className="truncate text-[13px] font-semibold text-white">{user.name}</p>
+          <p className="truncate text-[11.5px] text-[#6b7590]">{ROLE_LABELS[user.role]}</p>
         </div>
-        <button onClick={logout} title="Sign out" className="rounded-md p-1.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900">
+        <button onClick={logout} title="Sign out" className="rounded-md p-1.5 text-[#6b7590] transition hover:bg-white/10 hover:text-white">
           <LogOut className="size-4" />
         </button>
       </div>
@@ -167,7 +167,7 @@ export function Shell({ user, children }: { user: SessionUser; children: React.R
     <SessionCtx.Provider value={user}>
       <div className="min-h-dvh lg:pl-[232px]">
         {/* Desktop sidebar */}
-        <aside className="fixed inset-y-0 left-0 z-30 hidden w-[232px] flex-col border-r border-slate-200 bg-white lg:flex">
+        <aside className="fixed inset-y-0 left-0 z-30 hidden w-[232px] flex-col bg-[#0b1229] lg:flex">
           {brand}
           {nav}
           {sidebarFooter}
@@ -177,10 +177,10 @@ export function Shell({ user, children }: { user: SessionUser; children: React.R
         {open && (
           <div className="fixed inset-0 z-50 lg:hidden">
             <div className="absolute inset-0 bg-slate-900/35" onClick={() => setOpen(false)} />
-            <aside className="absolute inset-y-0 left-0 flex w-[260px] max-w-[85vw] flex-col bg-white shadow-2xl">
+            <aside className="absolute inset-y-0 left-0 flex w-[260px] max-w-[85vw] flex-col bg-[#0b1229] shadow-2xl">
               <div className="flex items-center justify-between pr-3">
                 {brand}
-                <button onClick={() => setOpen(false)} className="rounded-md p-1.5 text-slate-500 hover:bg-slate-100" aria-label="Close menu">
+                <button onClick={() => setOpen(false)} className="rounded-md p-1.5 text-[#a7b0c6] hover:bg-white/10" aria-label="Close menu">
                   <X className="size-5" />
                 </button>
               </div>

@@ -341,11 +341,11 @@ export function History({ items }: { items: { action: string; byName?: string; a
 }
 
 /** Brand mark (same as the reference design) */
-export function Logo({ size = 30 }: { size?: number }) {
+export function Logo({ size = 30, light }: { size?: number; light?: boolean }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" className="shrink-0">
-      <rect width="32" height="32" rx="7" fill="#17191e" />
-      <path d="M10.5 8h11.5v4.2h-7.1v3.3h6.1v4.1h-6.1V24h-4.4z" fill="#fff" />
+      <rect width="32" height="32" rx="7" fill={light ? "#fff" : "#17191e"} />
+      <path d="M10.5 8h11.5v4.2h-7.1v3.3h6.1v4.1h-6.1V24h-4.4z" fill={light ? "#0b1229" : "#fff"} />
       <rect x="19.2" y="19.6" width="4.4" height="4.4" rx="1.1" fill="#b8571a" />
     </svg>
   );
