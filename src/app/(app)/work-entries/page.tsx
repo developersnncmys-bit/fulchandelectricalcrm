@@ -29,7 +29,9 @@ function WorkEntries() {
   const [site, setSite] = useState("");
   const [importOpen, setImportOpen] = useState(false);
   const sites = useSites();
-  const { data, loading, reload } = useApi<any[]>(`/api/work-entries${qs({ status, site })}`);
+  const { data: all, loading, reload } = useApi<any[]>(`/api/work-entries${qs({ site })}`);
+  const data = all && (status ? all.filter((r) => r.status === status) : all);
+  const tabs = TABS.map((t) => ({ ...t, count: all ? (t.value ? all.filter((r) => r.status === t.value).length : all.length) : undefined }));
 
   return (
     <>
@@ -49,7 +51,7 @@ function WorkEntries() {
           )
         }
       />
-      <Tabs tabs={TABS} value={status} onChange={setStatus} />
+      <Tabs tabs={tabs} value={status} onChange={setStatus} />
       {loading && !data ? (
         <Spinner />
       ) : (

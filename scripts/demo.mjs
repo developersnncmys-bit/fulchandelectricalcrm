@@ -34,13 +34,13 @@ const RATES = {
 
 // What happens on each site, oldest first
 const PLAN = [
-  { bill: 1, sub: 125, pay: "full", payAgo: 90, ref: "SKY/WO/2411" },
-  { bill: 1, sub: 100, pay: "part", payAgo: 60, ref: "SKY/WO/2433" },
-  { bill: 1, sub: 80, pay: "none", ref: "GFD/PO/0912" },
-  { bill: 1, sub: 50, pay: "full", payAgo: 15, ref: "CRI/PUR/7781" },
-  { bill: 1, sub: 20, pay: "none", ref: "GFD/PO/0947" },
-  { bill: 0.6, sub: null, pay: "none", ref: "ORH/WO/118" },
-  { bill: 0, ref: "ORH/WO/124" },
+  { bill: 1, sub: 125, pay: "full", payAgo: 90 },
+  { bill: 1, sub: 100, pay: "part", payAgo: 60 },
+  { bill: 1, sub: 80, pay: "none" },
+  { bill: 1, sub: 50, pay: "full", payAgo: 15 },
+  { bill: 1, sub: 20, pay: "none" },
+  { bill: 0.6, sub: null, pay: "none" },
+  { bill: 0 },
   { approve: false },
 ];
 
@@ -69,7 +69,7 @@ for (const site of sites) {
   counts.po++;
   await accounts(`/api/purchase-orders/${po._id}`, { body: { action: "send" } });
   if (plan.approve === false) continue;
-  await accounts(`/api/purchase-orders/${po._id}`, { body: { action: "approve", approvalRef: "Signed copy received", clientPoNumber: plan.ref } });
+  await accounts(`/api/purchase-orders/${po._id}`, { body: { action: "approve", approvalRef: "Signed copy received", clientPoNumber: `${String(site.code).split("-")[0]}/WO/${2400 + k * 17}` } });
   if (!plan.bill) continue;
 
   const full = await accounts(`/api/purchase-orders/${po._id}`);

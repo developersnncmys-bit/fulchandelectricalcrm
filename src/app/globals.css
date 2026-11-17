@@ -59,6 +59,17 @@ body {
       placeholder:text-slate-400 hover:border-slate-300 focus:border-[#a9a49a] focus:outline-none focus:ring-[3px] focus:ring-brand-500/10
       disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500;
   }
+  select.input,
+  select.cell-input {
+    @apply cursor-pointer appearance-none bg-no-repeat pr-8;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236c707a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-position: right 10px center;
+    background-size: 12px;
+  }
+  select.cell-input {
+    @apply pr-6;
+    background-position: right 6px center;
+  }
   textarea.input {
     @apply h-auto py-2;
   }

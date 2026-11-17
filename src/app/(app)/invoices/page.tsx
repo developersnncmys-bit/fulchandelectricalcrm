@@ -24,11 +24,12 @@ function Invoices() {
   const router = useRouter();
   const [tab, setTab] = useState("");
   const [f, setF] = useState<any>({});
-  const params: any = { ...f };
-  if (["draft", "issued", "submitted", "cancelled"].includes(tab)) params.status = tab;
-  if (tab === "outstanding") params.outstanding = "1";
-  if (tab === "paid") params.paymentStatus = "paid";
-  const { data, loading } = useApi<any[]>(`/api/invoices${qs(params)}`);
+  const { data: all, loading } = useApi<any[]>(`/api/invoices${qs(f)}`);
+  const match = (r: any, v: string) =>
+    !v ||
+    (v === "outstanding" ? ["issued", "submitted"].includes(r.status) && r.outstanding > 0.5 : v === "paid" ? r.paymentStatus === "paid" && r.status !== "cancelled" : r.status === v);
+  const data = all?.filter((r) => match(r, tab));
+  const tabs = TABS.map((t) => ({ ...t, count: all?.filter((r) => match(r, t.value)).length }));
   const now = Date.now();
 
   return (
@@ -44,7 +45,7 @@ function Invoices() {
           )
         }
       />
-      <Tabs tabs={TABS} value={tab} onChange={setTab} />
+      <Tabs tabs={tabs} value={tab} onChange={setTab} />
       <div className="mb-3">
         <FilterBar value={f} onChange={setF} />
       </div>

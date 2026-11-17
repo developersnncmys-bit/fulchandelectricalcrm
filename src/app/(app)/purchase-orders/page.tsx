@@ -24,7 +24,10 @@ function POList() {
   const sp = useSearchParams();
   const [status, setStatus] = useState(sp.get("status") || "");
   const [f, setF] = useState<any>({});
-  const { data, loading } = useApi<any[]>(`/api/purchase-orders${qs({ status, client: f.client, site: f.site })}`);
+  const { data: all, loading } = useApi<any[]>(`/api/purchase-orders${qs({ client: f.client, site: f.site })}`);
+  const match = (r: any, v: string) => !v || v.split(",").includes(r.status);
+  const data = all?.filter((r) => match(r, status));
+  const tabs = TABS.map((t) => ({ ...t, count: all?.filter((r) => match(r, t.value)).length }));
 
   return (
     <>
@@ -39,7 +42,7 @@ function POList() {
           )
         }
       />
-      <Tabs tabs={TABS} value={status} onChange={setStatus} />
+      <Tabs tabs={tabs} value={status} onChange={setStatus} />
       <div className="mb-3">
         <FilterBar value={f} onChange={setF} dates={false} />
       </div>
